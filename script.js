@@ -18,7 +18,7 @@ function addTask() {
     let li = document.createElement("li");
     li.textContent = taskText;
     let removeBtn = document.createElement("button");
-    removeBtn.className = "remove-btn";
+    removeBtn.classList.add("remove-btn");
     removeBtn.textContent = "Remove";
     removeBtn.onclick = () => {
       li.remove();
