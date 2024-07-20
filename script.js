@@ -3,6 +3,7 @@ const taskInput = document.getElementById("task-input");
 const taskList = document.getElementById("task-list");
 
 document.addEventListener("DOMContentLoaded", () => {
+  loadTasks();
   addButton.addEventListener("click", () => addTask());
   taskInput.addEventListener("keypress", (event) => {
     if (event.key == "Enter") {
@@ -10,8 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-function addTask() {
-  const taskText = taskInput.value.trim();
+function loadTasks() {
+  const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  storedTasks.forEach((taskText) => addTask(taskText, false)); // 'false' indicates not to save again to Local Storage
+}
+
+function addTask(taskText, save = true) {
+  // Task creation logic remains the same
+  taskText = taskInput.value.trim();
   if (taskText.length == 0) {
     alert("enter a task.");
   } else {
@@ -26,5 +33,10 @@ function addTask() {
     li.appendChild(removeBtn);
     taskList.appendChild(li);
     taskInput.value = "";
+  }
+  if (save) {
+    const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+    storedTasks.push(taskText);
+    localStorage.setItem("tasks", JSON.stringify(storedTasks));
   }
 }
